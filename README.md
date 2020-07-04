@@ -29,4 +29,4 @@ current_user ログインしているユーザー
 
 
 
-<% @books.each do |book| %>
+<% @books.each do |book| %># bk2-before_debug
