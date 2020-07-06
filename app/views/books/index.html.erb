@@ -1,11 +1,11 @@
  <div class="container">
     <p id="notice"></p>
     <div class="error_messages">
-  <% if @book.errors.any? %>
+  <% if @new_book.errors.any? %>
     <div class="error_explanation">
-      <h2><%= @book.errors.count %>errors prohibited this book from being saved:</h2>
+      <h2><%= @new_book.errors.count %>errors prohibited this book from being saved:</h2>
       <ul>
-        <% @book.errors.full_messages.each do |message| %>
+        <% @new_book.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -15,30 +15,9 @@
       <div class="row">
           <div class="col-xs-3">
               <h2>User info</h2>
-              <%= attachment_image_tag current_user , :profile_image , fallback: "no_image.jpg" %>
-                <table class="table">
-                    <tbody> 
-                        <tr>
-                            <th>name</th>
-                            <th><%= @user.name %><th>
-                        </tr>
-                        <tr>
-                          <th>introduction</th>
-                            <th><%= @user.introduction %></th>
-                        </tr>
-                    </tbody>
-                </table>
-                  <p>
-                     <td><%= link_to "edit", edit_user_path(current_user),class:'col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_19746' %></td> 
-                  </p>
+              <%= render "users/profile", user: current_user %>
                   <h2>New book</h2>
-                    <%= form_for(@book) do |f| %>
-                        <h4>Title</h4>
-                        <%= f.text_field :title %>
-                        <h4>opinion</h4>
-                        <%= f.text_area :body %>
-                        <p><%= f.submit 'Create Book',class:'btn btn-primary col-xs-12' %></p>
-                    <% end %>
+              <%= render "books/newform", book: @new_book %>
           </div>
           <div class="col-xs-9">
                 <h2>Books</h2>
@@ -61,10 +40,29 @@
                                     <% end %>
                                 </td>
                                 <td><%= book.body %></td>
+                                <% if book.favorited_by?(current_user) %>
+                <td>
+                <%= link_to book_favorites_path(book), method: :delete do %>
+                    <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></span>
+
+                    <%= book.favorites.count %>
+                <% end %>
+                </td>
+                <% else %>
+                  <td>
+                    <%= link_to book_favorites_path(book), method: :post do %>
+                        <span class="glyphicon glyphicon-heart" aria-hidden="true" ></span>
+                        <%= book.favorites.count %>
+                      <% end %>
+                  </td>
+                  <% end %>
+                <td><a href="#comments">コメント数 :<%= book.post_comments.count %></a></td>
                             </tr>
                         <% end %>
                     </tbody>
                 </table>
+            </div>
+
           </div>
       </div>
   </div>

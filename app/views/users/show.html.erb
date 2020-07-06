@@ -21,33 +21,10 @@
       	<div class="row">
           	<div class="col-xs-3">
 		    	<h2>User info</h2>
-		    <%= attachment_image_tag current_user , :profile_image , fallback: "no_image.jpg" %>
-	    	<table class="table">
-      			<tbody>
-                    <tr>
-                        <th>name</th>
-                        <th><%= @user.name %><th>
-                    </tr>
-                    <tr>
-                        <th>introduction</th>
-                        <th><%= @user.introduction %></th>
-                    </tr>
-              	</tbody>
-	        </table>
-	            <p>
-	                <td><%= link_to "edit", edit_user_path(current_user),class:'col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_19746' %></td> 
-	            </p>
+		    	<%= render "users/profile", user: @user %>
 			<h2>New book</h2>
 			<!-- form_for部分 -->
-			<%= form_for(@new_book) do |f| %>
-				 <h4>Title</h4>
-				 <%= f.text_field :title %>
-				 <h4>opinion</h4>
-				 <%= f.text_area :body %>
-				 <p>
-				 	<%= f.submit 'Create Book',class:'btn btn-primary col-xs-15' %>
-				 </p>
-			<% end %>
+				<%= render "books/newform", book: @new_book %>
 	</div>
 
 				<div class="col-xs-9">

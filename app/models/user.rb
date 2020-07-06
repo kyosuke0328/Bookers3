@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
          has_many :books, dependent: :destroy
          has_many :homes, dependent: :destroy
+         has_many :post_comments, dependent: :destroy
+         has_many :favorites, dependent: :destroy
          attachment :profile_image # ここを追加（_idは含めません）
          def email_required?
             false
