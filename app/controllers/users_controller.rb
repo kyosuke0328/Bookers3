@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, only: [:index, :show, :edit]
     def new
 		@user = user.new
     end
@@ -27,7 +26,7 @@ class UsersController < ApplicationController
         @books = @user.books
     end
     def edit
-    	@user = User.find(params[:id])
+            user = User.find(params[:id])
         if @user.id != current_user.id
            redirect_to user_path(current_user)
             
@@ -41,6 +40,13 @@ class UsersController < ApplicationController
         else
             render 'edit'
         end
+        def follows
+
+    end
+
+    def followers
+    
+    end
     end
 
     private
